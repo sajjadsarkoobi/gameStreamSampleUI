@@ -10,6 +10,9 @@ import UIKit
 
 class play_VC: UIViewController {
 
+    //Variables
+    var gradient: CAGradientLayer!
+    
     //IBOutlets & IBAction
     @IBOutlet weak var avatarImgView: UIImageView!
     @IBOutlet weak var avatarPlusView: UIImageView!
@@ -24,6 +27,8 @@ class play_VC: UIViewController {
     @IBOutlet weak var shareView: UIView!
     @IBOutlet weak var commentView: UIView!
     
+    //TableView
+    @IBOutlet weak var tableView: UITableView!
     
     
     //TopView//
@@ -61,7 +66,8 @@ class play_VC: UIViewController {
         setInitialObjects()
         addTouchRecognations()
         setupCollectionView()
-        
+        setUpTableView()
+        setGradient()
     }
     
     
@@ -128,6 +134,10 @@ class play_VC: UIViewController {
         overLayerSubLabel.attributedText = attributedString
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        gradient.frame = tableView.bounds
+    }
 
     func addTouchRecognations(){
         let shareViewTouch = UITapGestureRecognizer(target: self, action: #selector(touchTriggerd))
@@ -138,11 +148,17 @@ class play_VC: UIViewController {
         
     }
 
+   
     
     func setupCollectionView(){
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         collectionView.reloadData()
+    }
+    func setUpTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        tableView.reloadData()
     }
     
     @objc func touchTriggerd(_ sender:UITapGestureRecognizer){
@@ -160,6 +176,64 @@ class play_VC: UIViewController {
     }
 }
 
+
+//Gradient
+extension play_VC {
+    func setGradient(){
+        gradient = CAGradientLayer()
+        gradient.frame = tableView.bounds
+        gradient.colors = [UIColor.clear.cgColor, AppColors.mainAppColor.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0, 0.05, 0.99, 1]
+        tableView.layer.mask = gradient
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateGradientFrame()
+    }
+    
+
+    func action(for layer: CALayer, forKey event: String) -> CAAction? {
+        return NSNull()
+    }
+    
+
+    private func updateGradientFrame() {
+        gradient.frame = CGRect(
+            x: 0,
+            y: tableView.contentOffset.y,
+            width: tableView.bounds.width,
+            height: tableView.bounds.height
+        )
+    }
+}
+
+
+
+//TableView
+extension play_VC: UITableViewDelegate,UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        
+        if( !(cell != nil))
+        {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+        }
+        cell?.backgroundColor = .clear
+        cell?.contentView.backgroundColor = .clear
+        cell!.textLabel?.text = "Hello \(indexPath.row)"
+        cell!.textLabel?.textColor = AppColors.textColor
+        return cell!
+    }
+    
+    
+}
+
+
+
+//CollectionView
 extension play_VC:UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -176,6 +250,8 @@ extension play_VC:UICollectionViewDelegate,UICollectionViewDataSource {
 }
 
 
+
+//CollectionView Cell
 class usersCollectionViewCell:UICollectionViewCell {
     @IBOutlet weak var avatarView: UIView!
     @IBOutlet weak var backAvatarImgView: UIImageView!
