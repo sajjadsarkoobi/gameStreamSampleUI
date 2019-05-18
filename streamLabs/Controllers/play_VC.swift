@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
 class play_VC: UIViewController {
 
     //Variables
     var gradient: CAGradientLayer!
+    var player: AVPlayer = AVPlayer()
+    var videoPlayed:Bool = false
     
     //IBOutlets & IBAction
     @IBOutlet weak var avatarImgView: UIImageView!
@@ -30,6 +34,8 @@ class play_VC: UIViewController {
     //TableView
     @IBOutlet weak var tableView: UITableView!
     
+    //Video Player area
+    @IBOutlet weak var playerView: UIView!
     
     //TopView//
     @IBOutlet weak var topLabel: UILabel!
@@ -71,6 +77,19 @@ class play_VC: UIViewController {
     }
     
     
+    override func viewDidLayoutSubviews() {
+        gradient.frame = tableView.bounds
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        playVideo()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        stopVideo()
+    }
     
     func setInitialObjects(){
         let boldAttrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)]
@@ -135,9 +154,7 @@ class play_VC: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        gradient.frame = tableView.bounds
-    }
+  
 
     func addTouchRecognations(){
         let shareViewTouch = UITapGestureRecognizer(target: self, action: #selector(touchTriggerd))
@@ -174,6 +191,8 @@ class play_VC: UIViewController {
             break
         }
     }
+    
+
 }
 
 
@@ -207,6 +226,48 @@ extension play_VC {
 }
 
 
+//Play video
+extension play_VC {
+    func playVideo(){
+        guard let path = Bundle.main.path(forResource: "small", ofType:"mp4") else {
+            debugPrint("video not found")
+            return
+        }
+        
+        if videoPlayed {
+            player.play()
+            return
+        }
+
+        player = AVPlayer(url: URL(fileURLWithPath: path))
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.playerView.bounds
+        playerLayer.videoGravity = .resizeAspectFill
+        self.playerView.layer.addSublayer(playerLayer)
+        self.playerView.bringSubviewToFront(overLayerView)
+        player.play()
+        videoPlayed = true
+        
+        player.actionAtItemEnd = .none
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerItemDidReachEnd(notification:)),
+                                               name: .AVPlayerItemDidPlayToEndTime,
+                                               object: player.currentItem)
+        
+    }
+    
+    func stopVideo(){
+        player.pause()
+        
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+        }
+    }
+}
 
 //TableView
 extension play_VC: UITableViewDelegate,UITableViewDataSource {

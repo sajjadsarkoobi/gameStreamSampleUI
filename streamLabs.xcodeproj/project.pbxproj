@@ -22,6 +22,7 @@
 		5FCBFF21228B62CF00836BD1 /* Glob_Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCBFF20228B62CF00836BD1 /* Glob_Variables.swift */; };
 		5FCBFF23228B672300836BD1 /* uiViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCBFF22228B672300836BD1 /* uiViewExtension.swift */; };
 		5FEE7BE82290746D00AC3AB9 /* generalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE7BE72290746D00AC3AB9 /* generalExtension.swift */; };
+		5FEE7BEC2290CAA900AC3AB9 /* small.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5FEE7BEB2290CAA900AC3AB9 /* small.mp4 */; };
 		D090B874E146ECF7E27F6C32 /* Pods_streamLabs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346086CDABB825402306FDBA /* Pods_streamLabs.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		5FCBFF20228B62CF00836BD1 /* Glob_Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Glob_Variables.swift; sourceTree = "<group>"; };
 		5FCBFF22228B672300836BD1 /* uiViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uiViewExtension.swift; sourceTree = "<group>"; };
 		5FEE7BE72290746D00AC3AB9 /* generalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generalExtension.swift; sourceTree = "<group>"; };
+		5FEE7BEB2290CAA900AC3AB9 /* small.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = small.mp4; sourceTree = "<group>"; };
 		FF092ACC49BD2229171A2D0F /* Pods-streamLabs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-streamLabs.release.xcconfig"; path = "Target Support Files/Pods-streamLabs/Pods-streamLabs.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 		5F670545228B58E4007EFF87 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5FEE7BEB2290CAA900AC3AB9 /* small.mp4 */,
 				5F670533228B5826007EFF87 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -243,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F670537228B5826007EFF87 /* LaunchScreen.storyboard in Resources */,
+				5FEE7BEC2290CAA900AC3AB9 /* small.mp4 in Resources */,
 				5F670534228B5826007EFF87 /* Assets.xcassets in Resources */,
 				5F670532228B5824007EFF87 /* Main.storyboard in Resources */,
 			);

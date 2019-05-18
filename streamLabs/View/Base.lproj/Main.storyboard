@@ -17,7 +17,19 @@
                     <view key="view" contentMode="scaleToFill" id="4bP-3b-p70">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byK-xq-JOr">
+                                <rect key="frame" x="154.33333333333334" y="394" width="66.666666666666657" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="byK-xq-JOr" firstAttribute="centerY" secondItem="4bP-3b-p70" secondAttribute="centerY" id="0Th-g0-gVp"/>
+                            <constraint firstItem="byK-xq-JOr" firstAttribute="centerX" secondItem="4bP-3b-p70" secondAttribute="centerX" id="33S-22-elg"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="t5Q-ad-ew6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="MAr-hm-Blz"/>
@@ -33,7 +45,19 @@
                     <view key="view" contentMode="scaleToFill" id="rKe-Xa-wJu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENo-sz-VRy">
+                                <rect key="frame" x="156.66666666666666" y="394" width="62" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ENo-sz-VRy" firstAttribute="centerX" secondItem="rKe-Xa-wJu" secondAttribute="centerX" id="Z6y-fN-5j9"/>
+                            <constraint firstItem="ENo-sz-VRy" firstAttribute="centerY" secondItem="rKe-Xa-wJu" secondAttribute="centerY" id="y8r-3C-oIP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="iOV-Pt-0XQ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="G3a-9X-Wc2"/>
@@ -49,7 +73,19 @@
                     <view key="view" contentMode="scaleToFill" id="pip-h9-jku">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uY-L3-yo3">
+                                <rect key="frame" x="127" y="394" width="121.33333333333331" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5uY-L3-yo3" firstAttribute="centerY" secondItem="pip-h9-jku" secondAttribute="centerY" id="l9F-6s-wuB"/>
+                            <constraint firstItem="5uY-L3-yo3" firstAttribute="centerX" secondItem="pip-h9-jku" secondAttribute="centerX" id="t4V-Et-hvj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="XOO-IQ-oND"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="pWb-B0-mRZ"/>
@@ -394,7 +430,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ONk-MI-D65">
                                 <rect key="frame" x="0.0" y="184" width="375" height="240"/>
                                 <subviews>
-                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x8E-wk-qkw">
+                                    <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x8E-wk-qkw">
                                         <rect key="frame" x="0.0" y="180" width="375" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#12 in Todays Top Clip Contest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oK-Pe-dNF">
@@ -487,6 +523,7 @@
                         <outlet property="overLayerSubLabel" destination="geA-2a-ybv" id="nKt-8a-cAF"/>
                         <outlet property="overLayerTopLabel" destination="0oK-Pe-dNF" id="m5L-3j-SiI"/>
                         <outlet property="overLayerView" destination="x8E-wk-qkw" id="oJF-zZ-dUO"/>
+                        <outlet property="playerView" destination="ONk-MI-D65" id="696-XW-fFO"/>
                         <outlet property="shareImgView" destination="1Js-6S-bgp" id="kc8-Ak-cie"/>
                         <outlet property="shareLabel" destination="rUk-4F-RQW" id="8ZD-B5-AzA"/>
                         <outlet property="shareView" destination="Gvw-rK-tAp" id="lXP-NM-0KC"/>
