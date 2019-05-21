@@ -13,9 +13,12 @@ import AVKit
 class play_VC: UIViewController {
 
     //Variables
-    var gradient: CAGradientLayer!
     var player: AVPlayer = AVPlayer()
     var videoPlayed:Bool = false
+    
+    var commentsList:Comments_Model = Comments_Model()
+    var userLists:Users_Model = Users_Model()
+    
     
     //IBOutlets & IBAction
     @IBOutlet weak var avatarImgView: UIImageView!
@@ -30,6 +33,7 @@ class play_VC: UIViewController {
     @IBOutlet weak var starCountLabel: UILabel!
     @IBOutlet weak var shareView: UIView!
     @IBOutlet weak var commentView: UIView!
+    @IBOutlet weak var gradientView: UIView!
     
     //TableView
     @IBOutlet weak var tableView: UITableView!
@@ -74,14 +78,10 @@ class play_VC: UIViewController {
         setupCollectionView()
         setUpTableView()
         setGradient()
+        setListsData()
     }
     
-    
-    override func viewDidLayoutSubviews() {
-        gradient.frame = tableView.bounds
-    }
-    
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         playVideo()
@@ -98,7 +98,7 @@ class play_VC: UIViewController {
         
         
         ///BottomView
-        avatarImgView.image = UIImage(named: "avatar00002")
+        avatarImgView.image = UIImage(named: "avatar2")
         avatarImgView.round()
         
         avatarPlusView.image = fontImages.plusIcon
@@ -165,17 +165,40 @@ class play_VC: UIViewController {
         
     }
 
-   
+    func setListsData(){
+        
+        ///Converting message fake json data to the list
+        guard let messageData: Data = messagesFakeJSON.data(using: .utf8) else {
+            return
+        }
+        guard let comments = try? JSONDecoder().decode(Comments_Model.self, from: messageData) else {
+            return
+        }
+        self.commentsList = comments
+        
+        
+        ///Converting users fake json data to the list
+        guard let userData: Data = userNameFakeJSON.data(using: .utf8) else {
+            return
+        }
+        guard let users = try? JSONDecoder().decode(Users_Model.self, from: userData) else {
+            return
+        }
+        self.userLists = users
+        
+        ///Relodaing tabledata and collection view
+        collectionView.reloadData()
+        tableView.reloadData()
+    }
     
     func setupCollectionView(){
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        collectionView.reloadData()
     }
+    
     func setUpTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        tableView.reloadData()
     }
     
     @objc func touchTriggerd(_ sender:UITapGestureRecognizer){
@@ -199,29 +222,11 @@ class play_VC: UIViewController {
 //Gradient
 extension play_VC {
     func setGradient(){
-        gradient = CAGradientLayer()
+        let gradient = CAGradientLayer()
         gradient.frame = tableView.bounds
-        gradient.colors = [UIColor.clear.cgColor, AppColors.mainAppColor.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0, 0.05, 0.99, 1]
-        tableView.layer.mask = gradient
-    }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        updateGradientFrame()
-    }
-    
-
-    func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        return NSNull()
-    }
-    
-
-    private func updateGradientFrame() {
-        gradient.frame = CGRect(
-            x: 0,
-            y: tableView.contentOffset.y,
-            width: tableView.bounds.width,
-            height: tableView.bounds.height
-        )
+        gradient.colors = [UIColor.clear.cgColor, AppColors.mainAppColor.cgColor]
+        gradient.frame = CGRect(x: 0, y: 0, width: gradientView.frame.width, height: gradientView.frame.height)
+        gradientView.layer.addSublayer(gradient)
     }
 }
 
@@ -272,7 +277,7 @@ extension play_VC {
 //TableView
 extension play_VC: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.commentsList.comments.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -282,14 +287,21 @@ extension play_VC: UITableViewDelegate,UITableViewDataSource {
         {
             cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
         }
+        
+        let data = commentsList.comments.messages[indexPath.row]
+        
         cell?.backgroundColor = .clear
         cell?.contentView.backgroundColor = .clear
-        cell!.textLabel?.text = "Hello \(indexPath.row)"
-        cell!.textLabel?.textColor = AppColors.textColor
+        
+        let boldAttrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: AppColors.textColor]
+        let regularGrayColorAttrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),NSAttributedString.Key.foregroundColor: AppColors.grayColor]
+        
+        let AttText = NSMutableAttributedString(string: data.name, attributes: boldAttrs)
+        AttText.append(NSMutableAttributedString(string: "   \(data.message)", attributes: regularGrayColorAttrs))
+        
+        cell!.textLabel?.attributedText = AttText
         return cell!
     }
-    
-    
 }
 
 
@@ -298,19 +310,32 @@ extension play_VC: UITableViewDelegate,UITableViewDataSource {
 extension play_VC:UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return self.userLists.items.users.count
     }
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "usersCollectionViewCell", for: indexPath) as! usersCollectionViewCell
+        
+        let data = self.userLists.items.users[indexPath.row]
+        
+        cell.userNameLabel.text = data.name
+        cell.counterLabel.isHidden = !data.showCounter
+        cell.starImgView.isHidden = !data.showStar
+        cell.indicatorView.isHidden = !data.showCounter && !data.showStar
+        
+        cell.counterLabel.text = "\(data.counter)"
+        cell.avatarImgView.image = randomImage()
+        
+        cell.userNameLabel.textColor = cell.starImgView.isHidden ? AppColors.grayColor : AppColors.textColor
+        
+        cell.backAvatarImgView.image = cell.starImgView.isHidden ? UIImage(named: "backGradient") : nil
+        
         return cell
     }
     
     
 }
-
-
 
 //CollectionView Cell
 class usersCollectionViewCell:UICollectionViewCell {
