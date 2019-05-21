@@ -46,7 +46,14 @@ class play_VC: UIViewController {
     @IBOutlet weak var topSubtitleLabel: UILabel!
     @IBOutlet weak var moreBtn: UIButton!
     @IBAction func moreBtnAction(_ sender: UIButton) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for i in 1...3 {
+            actionSheet.addAction(UIAlertAction(title: "Action \(i)", style: .default, handler: nil))
+        }
+        actionSheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     @IBOutlet weak var starTopView: UIView!
@@ -206,6 +213,11 @@ class play_VC: UIViewController {
         switch  sender.view{
         case shareView:
             print("Share")
+            let text = "This is the text....."
+            let textShare = [ text ]
+            let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
             break
         case commentView:
             print("Comment")
@@ -360,5 +372,15 @@ class usersCollectionViewCell:UICollectionViewCell {
         starImgView.image = fontImages.starIcon(color: AppColors.mainAppColor, size: 14)
         starImgView.round()
         
+    }
+    
+}
+
+
+
+//Set the status bar color to white
+extension play_VC {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }

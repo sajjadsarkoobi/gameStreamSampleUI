@@ -18,3 +18,11 @@ class profile_VC: UIViewController {
    
 
 }
+
+
+//Set the status bar color to white
+extension profile_VC {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+}

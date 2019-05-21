@@ -15,7 +15,11 @@ class search_VC: UIViewController {
 
         self.view.backgroundColor = AppColors.mainAppColor
     }
-    
+}
 
-
+//Set the status bar color to white
+extension search_VC {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
 }

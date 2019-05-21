@@ -60,6 +60,10 @@ class mainTabBarController: UITabBarController {
         self.tabBar.addSubview(dotView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+         self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = self.tabBar.items?.firstIndex(of: item)
@@ -98,5 +102,6 @@ class mainTabBarController: UITabBarController {
     }
     
     
+ 
 
 }

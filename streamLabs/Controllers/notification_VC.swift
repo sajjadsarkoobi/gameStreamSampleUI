@@ -15,8 +15,13 @@ class notification_VC: UIViewController {
 
         self.view.backgroundColor = AppColors.mainAppColor
     }
-    
 
-    
+}
 
+
+//Set the status bar color to white
+extension notification_VC {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
 }
