@@ -36,7 +36,7 @@ class play_VC: UIViewController {
     @IBOutlet weak var commentView: UIView!
     @IBOutlet weak var gradientView: UIView!
     
-    
+    //Action trigger when big Yellow star icon touch
     @IBAction func bigStarBtnAction(_ sender: UIButton) {
         animateCircleBtn(object: bigStarBtn)
     }
@@ -100,13 +100,19 @@ class play_VC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        ///Video will be play when whole view appear
         playVideo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        
+        ///Video will be pause when view disapper
         stopVideo()
     }
     
+    
+    //Setting initial values for counters
     func setInitialData(){
         currentStarCount = 100
         bigStarCount = 30
@@ -114,12 +120,16 @@ class play_VC: UIViewController {
         setStarCounters()
     }
     
+    
+    //Updating Labels of counters
     func setStarCounters(){
         starCountLabel.text = String(bigStarCount)
         starTopCountLabel.text = String(currentStarCount)
     }
     
     
+    //Seting initial specifications for objects
+    ///Sample Data
     func setInitialObjects(){
         let boldAttrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)]
         let regularGrayColorAttrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13),NSAttributedString.Key.foregroundColor: AppColors.grayColor]
@@ -183,8 +193,7 @@ class play_VC: UIViewController {
         
     }
     
-  
-
+    ///Adding Touch recognation to Share and Comment Button
     func addTouchRecognations(){
         let shareViewTouch = UITapGestureRecognizer(target: self, action: #selector(touchTriggerd))
         shareView.addGestureRecognizer(shareViewTouch)
@@ -194,6 +203,9 @@ class play_VC: UIViewController {
         
     }
 
+    
+    //retrive data from sample JSON Raw string
+    ///in reall application we get this data from server
     func setListsData(){
         
         ///Converting message fake json data to the list
@@ -220,16 +232,21 @@ class play_VC: UIViewController {
         tableView.reloadData()
     }
     
+    ///CollectionView setup
     func setupCollectionView(){
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
     }
     
+    
+    ///Table view setup
     func setUpTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
     
+    
+    ///Touch triggerd
     @objc func touchTriggerd(_ sender:UITapGestureRecognizer){
         
         switch  sender.view{
@@ -252,6 +269,11 @@ class play_VC: UIViewController {
 
 }
 
+
+
+/////////////
+///Extensions:
+/////////////
 
 //Gradient
 extension play_VC {
@@ -371,35 +393,6 @@ extension play_VC:UICollectionViewDelegate,UICollectionViewDataSource {
     
 }
 
-//CollectionView Cell
-class usersCollectionViewCell:UICollectionViewCell {
-    @IBOutlet weak var avatarView: UIView!
-    @IBOutlet weak var backAvatarImgView: UIImageView!
-    @IBOutlet weak var avatarImgView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var indicatorView: UIView!
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var starImgView: UIImageView!
-    
-    
-    override func awakeFromNib() {
-        avatarView.round()
-        backAvatarImgView.round()
-        avatarImgView.round()
-        
-        avatarImgView.layer.borderColor = AppColors.mainAppColor.cgColor
-        avatarImgView.layer.borderWidth = 3
-        userNameLabel.textColor = AppColors.grayColor
-        indicatorView.round()
-        starImgView.image = fontImages.starIcon(color: AppColors.mainAppColor, size: 14)
-        starImgView.round()
-        
-    }
-    
-}
-
-
-
 //Set the status bar color to white
 extension play_VC {
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -408,6 +401,10 @@ extension play_VC {
 }
 
 
+
+//////////////
+///Animations:
+//////////////
 
 //Animate Star Btn
 extension play_VC {
@@ -463,10 +460,12 @@ extension play_VC {
     
     
     func animatePoints(from downPoints:Int,to upperPoints:Int){
-     
-        
+
         for i in 0...(upperPoints - downPoints) {
+            
+            ///Random number for positioning the count label
             let n = Int(arc4random_uniform(30))
+            
             let label = UILabel()
             label.textColor = UIColor.random
             label.font = UIFont.boldSystemFont(ofSize: CGFloat(i + 18))
@@ -477,8 +476,7 @@ extension play_VC {
             label.frame = CGRect(x: frame.origin.x - 10 + CGFloat(n), y: frame.minY - CGFloat(35 + n), width: 50, height: 50)
             self.view.addSubview(label)
             
-           
-            
+        
             UIView.animate(withDuration: 0.4, delay: (Double(i) * 0.4), options: .curveEaseOut, animations: {
                 label.alpha = 1
                 self.view.bringSubviewToFront(label)
@@ -499,6 +497,41 @@ extension play_VC {
             
             
         }
+    }
+    
+}
+
+
+
+
+
+///////
+///Cells:
+///////
+
+//CollectionView Cell
+class usersCollectionViewCell:UICollectionViewCell {
+    @IBOutlet weak var avatarView: UIView!
+    @IBOutlet weak var backAvatarImgView: UIImageView!
+    @IBOutlet weak var avatarImgView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var indicatorView: UIView!
+    @IBOutlet weak var counterLabel: UILabel!
+    @IBOutlet weak var starImgView: UIImageView!
+    
+    
+    override func awakeFromNib() {
+        avatarView.round()
+        backAvatarImgView.round()
+        avatarImgView.round()
+        
+        avatarImgView.layer.borderColor = AppColors.mainAppColor.cgColor
+        avatarImgView.layer.borderWidth = 3
+        userNameLabel.textColor = AppColors.grayColor
+        indicatorView.round()
+        starImgView.image = fontImages.starIcon(color: AppColors.mainAppColor, size: 14)
+        starImgView.round()
+        
     }
     
 }
