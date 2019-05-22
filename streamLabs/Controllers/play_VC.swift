@@ -110,6 +110,8 @@ class play_VC: UIViewController {
     func setInitialData(){
         currentStarCount = 100
         bigStarCount = 30
+        
+        setStarCounters()
     }
     
     func setStarCounters(){
@@ -475,18 +477,22 @@ extension play_VC {
             label.frame = CGRect(x: frame.origin.x - 10 + CGFloat(n), y: frame.minY - CGFloat(35 + n), width: 50, height: 50)
             self.view.addSubview(label)
             
+           
+            
             UIView.animate(withDuration: 0.4, delay: (Double(i) * 0.4), options: .curveEaseOut, animations: {
                 label.alpha = 1
                 self.view.bringSubviewToFront(label)
+
             }) { (_) in
                 UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
                     label.frame.origin.y = label.frame.maxY/2
                     label.alpha = 0
                     self.view.bringSubviewToFront(label)
-                }, completion: { _ in
+                    
                     self.bigStarCount += 1
                     self.currentStarCount -= 1
                     self.setStarCounters()
+                }, completion: { _ in
                     label.removeFromSuperview()
                 })
             }
