@@ -35,6 +35,11 @@ class play_VC: UIViewController {
     @IBOutlet weak var commentView: UIView!
     @IBOutlet weak var gradientView: UIView!
     
+    
+    @IBAction func bigStarBtnAction(_ sender: UIButton) {
+        animateCircleBtn(object: bigStarBtn)
+    }
+    
     //TableView
     @IBOutlet weak var tableView: UITableView!
     
@@ -91,7 +96,7 @@ class play_VC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        playVideo()
+        //playVideo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -383,4 +388,61 @@ extension play_VC {
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
     }
+}
+
+
+
+//Animate Star Btn
+extension play_VC {
+
+    func animateCircleBtn(object:UIView){
+        var isObjectSmall :Bool = false
+        
+        UIView.animate(withDuration: 2.2, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+
+            if isObjectSmall {
+                object.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }else{
+                object.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }
+            
+            isObjectSmall = !isObjectSmall
+        }) { _ in
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                  object.transform = .identity
+              
+            })
+          
+
+        }
+        
+        
+        for i in 0...7{
+            let animateView:UIView = UIView()
+                animateView.backgroundColor = object.backgroundColor
+                animateView.alpha = 0.3
+                animateView.clipsToBounds = true
+                animateView.frame = object.convert(object.bounds, to: self.view)
+                animateView.round()
+
+                self.view.addSubview(animateView)
+            
+                self.view.bringSubviewToFront(object.superview!.superview!)
+  
+            UIView.animate(withDuration: 3, delay: (Double(i) * 0.3), options: .curveEaseOut, animations: {
+                animateView.transform = CGAffineTransform(scaleX: 8, y: 8)
+                animateView.alpha = 0
+            }) { (_) in
+                animateView.removeFromSuperview()
+            }
+            
+        }
+      
+     
+    
+       
+        
+    }
+    
 }
