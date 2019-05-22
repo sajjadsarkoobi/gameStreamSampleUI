@@ -15,7 +15,8 @@ class play_VC: UIViewController {
     //Variables
     var player: AVPlayer = AVPlayer()
     var videoPlayed:Bool = false
-    
+    var currentStarCount : Int = 0
+    var bigStarCount: Int = 0
     var commentsList:Comments_Model = Comments_Model()
     var userLists:Users_Model = Users_Model()
     
@@ -85,23 +86,37 @@ class play_VC: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = AppColors.mainAppColor
        
+        setInitialData()
         setInitialObjects()
         addTouchRecognations()
         setupCollectionView()
         setUpTableView()
         setGradient()
         setListsData()
+        
+        
     }
     
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //playVideo()
+        playVideo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         stopVideo()
     }
+    
+    func setInitialData(){
+        currentStarCount = 100
+        bigStarCount = 30
+    }
+    
+    func setStarCounters(){
+        starCountLabel.text = String(bigStarCount)
+        starTopCountLabel.text = String(currentStarCount)
+    }
+    
     
     func setInitialObjects(){
         let boldAttrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)]
@@ -145,7 +160,7 @@ class play_VC: UIViewController {
         starTopImgView.round()
         starTopImgView.backgroundColor = AppColors.orangeColor
         starTopCountLabel.textColor = AppColors.orangeColor
-
+        
 
         
         let subtopAtttext = NSMutableAttributedString(string: "32.1k views", attributes: regularGrayColorAttrs)
@@ -396,8 +411,9 @@ extension play_VC {
 extension play_VC {
 
     func animateCircleBtn(object:UIView){
-        var isObjectSmall :Bool = false
         
+        ///Make Big star button bouncing
+        var isObjectSmall :Bool = false
         UIView.animate(withDuration: 2.2, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
 
             if isObjectSmall {
@@ -414,10 +430,11 @@ extension play_VC {
               
             })
           
-
         }
         
-        
+       
+        self.animatePoints(from: 1 , to: 10)
+        ///animate
         for i in 0...7{
             let animateView:UIView = UIView()
                 animateView.backgroundColor = object.backgroundColor
@@ -438,11 +455,44 @@ extension play_VC {
             }
             
         }
-      
-     
+
+    }
     
-       
+    
+    
+    func animatePoints(from downPoints:Int,to upperPoints:Int){
+     
         
+        for i in 0...(upperPoints - downPoints) {
+            let n = Int(arc4random_uniform(30))
+            let label = UILabel()
+            label.textColor = UIColor.random
+            label.font = UIFont.boldSystemFont(ofSize: CGFloat(i + 18))
+            label.text = "+\(downPoints + i)"
+            label.alpha = 0
+            
+            let frame = bigStarBtn.convert(bigStarBtn.bounds, to: self.view)
+            label.frame = CGRect(x: frame.origin.x - 10 + CGFloat(n), y: frame.minY - CGFloat(35 + n), width: 50, height: 50)
+            self.view.addSubview(label)
+            
+            UIView.animate(withDuration: 0.4, delay: (Double(i) * 0.4), options: .curveEaseOut, animations: {
+                label.alpha = 1
+                self.view.bringSubviewToFront(label)
+            }) { (_) in
+                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+                    label.frame.origin.y = label.frame.maxY/2
+                    label.alpha = 0
+                    self.view.bringSubviewToFront(label)
+                }, completion: { _ in
+                    self.bigStarCount += 1
+                    self.currentStarCount -= 1
+                    self.setStarCounters()
+                    label.removeFromSuperview()
+                })
+            }
+            
+            
+        }
     }
     
 }
