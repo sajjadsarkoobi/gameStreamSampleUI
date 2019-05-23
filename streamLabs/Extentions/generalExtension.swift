@@ -42,6 +42,7 @@ extension String {
 }
 
 
+//Generate random color
 extension UIColor {
     static var random: UIColor {
         return UIColor(red: .random(in: 0.5...1),

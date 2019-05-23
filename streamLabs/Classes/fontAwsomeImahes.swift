@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+///images from fontawsome
 struct fontImages {
     
     static var tabbarIconSize : CGSize { return  CGSize(width: 30, height: 30) }

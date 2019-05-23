@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//All colors in Application
 struct AppColors {
     static var mainAppColor : UIColor{ return #colorLiteral(red: 0.09, green: 0.14, blue: 0.18, alpha: 1) }
     static var grayColor : UIColor{ return #colorLiteral(red: 0.57, green: 0.59, blue: 0.60, alpha: 1) }

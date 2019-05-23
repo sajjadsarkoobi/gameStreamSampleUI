@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//return random images
 func randomImage() -> UIImage {
     let numberOfImages: UInt32 = 16
     let random = arc4random_uniform(numberOfImages)

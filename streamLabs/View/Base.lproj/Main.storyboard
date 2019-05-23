@@ -162,7 +162,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qwb-bY-4yw">
                                                 <rect key="frame" x="0.0" y="63.333333333333364" width="60" height="13.666666666666664"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

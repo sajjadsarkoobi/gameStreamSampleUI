@@ -15,7 +15,7 @@ class mainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        //Tabbar icons
         self.tabBar.items?[0].image = nil
         self.tabBar.items?[1].image = nil
         self.tabBar.items?[2].image = nil
@@ -65,6 +65,7 @@ class mainTabBarController: UITabBarController {
     }
     
     
+    //add animation to tabbar icons on touch
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = self.tabBar.items?.firstIndex(of: item)
         let subView = tabBar.subviews[index!+1].subviews.first as! UIImageView
@@ -86,6 +87,7 @@ class mainTabBarController: UITabBarController {
     }
     
     
+    //Adding dot to the tabbar
     func addDotInTabbar(index:CGFloat) -> UIView{
         let rect = CGRect(x: ( tabBar.frame.width / 4 ) * ( index ) + ( tabBar.frame.width / 8 ) + 5, y:  5 , width:5, height: 5)
         

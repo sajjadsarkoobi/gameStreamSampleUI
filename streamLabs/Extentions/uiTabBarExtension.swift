@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//Make uitabbar height smaller
 extension UITabBar {
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)

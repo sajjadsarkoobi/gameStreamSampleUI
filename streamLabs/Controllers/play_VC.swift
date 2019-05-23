@@ -137,7 +137,7 @@ class play_VC: UIViewController {
         
         
         ///BottomView
-        avatarImgView.image = UIImage(named: "avatar2")
+        avatarImgView.image = UIImage(named: "sajjadProfile")
         avatarImgView.round()
         
         avatarPlusView.image = fontImages.plusIcon
